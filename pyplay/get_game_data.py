@@ -1,4 +1,4 @@
-import os, json, sys, shutil
+import os, json, shutil
 from subprocess import PIPE, run
 
 GAME_DIR_PATTERN: str = "game"
@@ -7,7 +7,7 @@ GO_COMPILE_CMD: list = ["go", "build"]
 
 def find_all_game_dirs(source):
     game_paths: list = []
-    for root, dirs, files in os.walk(source):
+    for _, dirs, _ in os.walk(source):
         for directory in dirs:
             if GAME_DIR_PATTERN in directory.lower():
                 path = os.path.join(source, directory)
@@ -43,8 +43,8 @@ def make_json_metadata(path, game_dirs):
         json.dump(data, f)
 
 def compile_go_code(path):
-    code_file_name: str = None
-    for root, dirs, files in os.walk(path):
+    code_file_name = None
+    for _, _, files in os.walk(path):
         for file in files:
             if file.endswith(GAME_GO_EXT):
                 code_file_name = file
@@ -85,9 +85,10 @@ def main(source, target):
     make_json_metadata(json_path, new_game_dirs)
 
 if __name__ == "__main__":
-    args = sys.argv
-    if len(args) != 3:
-        raise ValueError("Please pass a source and target directory")
-
-    source, target = args[1:]
-    main(source, target)
+    # args = sys.argv
+    # if len(args) != 3:
+    #     raise ValueError("Please pass a source and target directory")
+    #
+    # source, target = args[1:]
+    # main(source, target)
+    print('hellow')
